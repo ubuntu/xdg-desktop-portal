@@ -28,6 +28,7 @@ PORTAL_IFACE_FILES =\
 	$(top_srcdir)/data/org.freedesktop.portal.Settings.xml \
 	$(top_srcdir)/data/org.freedesktop.portal.Trash.xml \
 	$(top_srcdir)/data/org.freedesktop.portal.Wallpaper.xml \
+	$(top_srcdir)/data/org.freedesktop.portal.WebExtensions.xml \
 	$(NULL)
 
 PORTAL_IMPL_IFACE_FILES =\
