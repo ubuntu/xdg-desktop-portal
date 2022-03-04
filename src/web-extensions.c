@@ -212,11 +212,13 @@ on_server_exited (GPid pid,
                   gint status,
                   gpointer user_data)
 {
-  WebExtensionsSession *we_session = user_data;
+  Session *session = user_data;
+  WebExtensionsSession *we_session = (WebExtensionsSession *)session;
 
+  SESSION_AUTOLOCK (session);
   we_session->child_pid = -1;
   we_session->child_watch_id = 0;
-  session_close ((Session *)we_session, TRUE);
+  session_close (session, TRUE);
 }
 
 static gboolean
