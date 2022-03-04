@@ -164,6 +164,13 @@ method_needs_request (GDBusMethodInvocation *invocation)
       else
         return TRUE;
     }
+  else if (strcmp (interface, "org.freedesktop.portal.WebExtensions") == 0)
+    {
+      if (strcmp (method, "Start") == 0)
+        return TRUE;
+      else
+        return FALSE;
+    }
   else
     {
       return TRUE;
@@ -271,7 +278,6 @@ on_bus_acquired (GDBusConnection *connection,
   export_portal_implementation (connection, trash_create (connection));
   export_portal_implementation (connection, game_mode_create (connection));
   export_portal_implementation (connection, realtime_create (connection));
-  export_portal_implementation (connection, web_extensions_create (connection));
 
   impls = find_all_portal_implementations ("org.freedesktop.impl.portal.Settings");
   export_portal_implementation (connection, settings_create (connection, impls));
@@ -311,6 +317,9 @@ on_bus_acquired (GDBusConnection *connection,
                                     device_create (connection,
                                                    access_impl->dbus_name,
                                                    lockdown));
+      export_portal_implementation (connection,
+                                    web_extensions_create (connection,
+                                                           access_impl->dbus_name));
 #ifdef HAVE_GEOCLUE
       export_portal_implementation (connection,
                                     location_create (connection,
