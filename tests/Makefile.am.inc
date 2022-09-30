@@ -69,6 +69,8 @@ test_portals_SOURCES += \
 	tests/trash.h \
 	tests/wallpaper.c \
 	tests/wallpaper.h \
+	tests/web-extensions.c \
+	tests/web-extensions.h \
         tests/glib-backports.c \
         tests/glib-backports.h \
 	$(NULL)
@@ -130,10 +132,12 @@ endif
 
 installed_test_dbsdir = $(installed_testdir)/dbs
 installed_test_portalsdir = $(installed_testdir)/portals
+installed_test_native_messaging_hostsdir = $(installed_testdir)/native-messaging-hosts
 
 if ENABLE_INSTALLED_TESTS
 dist_installed_test_dbs_DATA = tests/dbs/no_tables
 dist_installed_test_portals_DATA = tests/portals/test.portal
+dist_installed_test_native_messaging_hosts_DATA = tests/native-messaging-hosts/org.example.testing.json
 endif
 
 dist_installed_test_DATA = \
