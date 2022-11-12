@@ -169,7 +169,9 @@ xdg_desktop_portal_LDADD = \
 	$(NULL)
 xdg_desktop_portal_CFLAGS = \
 	-DDATADIR=\"$(datadir)\" \
+        -DLIBDIR=\"$(libdir)\" \
 	-DLIBEXECDIR=\"$(libexecdir)\" \
+        -DSYSCONFDIR=\"$(sysconfdir)\" \
 	-DBWRAP=\"$(BWRAP)\" \
 	$(BASE_CFLAGS) \
 	$(PIPEWIRE_CFLAGS) \
