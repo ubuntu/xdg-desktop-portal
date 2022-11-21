@@ -586,6 +586,7 @@ main (int argc, char **argv)
   g_test_add_func ("/portal/notification/bad-button", test_notification_bad_button);
 
   g_test_add_func ("/portal/webextensions/basic", test_web_extensions_basic);
+  g_test_add_func ("/portal/webextensions/bad-name", test_web_extensions_bad_name);
 #endif
 
   global_setup ();
