@@ -28,7 +28,7 @@ test_doc_portal_SOURCES = \
 	$(NULL)
 nodist_test_doc_portal_SOURCES = document-portal/document-portal-dbus.c
 
-EXTRA_test_doc_portal_DEPENDENCIES = tests/services/org.freedesktop.impl.portal.PermissionStore.service tests/services/org.freedesktop.portal.Documents.service
+EXTRA_test_doc_portal_DEPENDENCIES = tests/services/org.freedesktop.impl.portal.PermissionStore.service tests/services/org.freedesktop.portal.Documents.service tests/native-messaging-hosts/org.example.testing.json tests/native-messaging-hosts/installed-org.example.testing.json
 
 test_portals_CFLAGS = $(AM_CFLAGS) $(BASE_CFLAGS) $(LIBPORTAL_CFLAGS) $(SYSTEMD_LIBS)
 test_portals_LDADD = \
@@ -123,11 +123,20 @@ tests/services/org.freedesktop.impl.portal.PermissionStore.service: document-por
 	mkdir -p tests/services
 	$(AM_V_GEN) $(SED) -e "s|\@libexecdir\@|$(abs_top_builddir)|" $< > $@
 
+tests/native-messaging-hosts/org.example.testing.json: tests/native-messaging-hosts/org.example.testing.json.in
+	$(AM_V_GEN) $(SED) -e "s|\@server_path\@|$(abs_top_builddir)/tests/native-messaging-hosts/server.sh|" $< > $@
+
+tests/native-messaging-hosts/installed-org.example.testing.json: tests/native-messaging-hosts/org.example.testing.json.in
+	$(AM_V_GEN) $(SED) -e "s|\@server_path\@|$(installed_test_native_messaging_hostsdir)/server.sh|" $< > $@
+
 install-test-data-hook:
 if ENABLE_INSTALLED_TESTS
 	mkdir -p $(DESTDIR)$(installed_testdir)/services
 	ln -sf $(dbus_servicedir)/org.freedesktop.portal.Documents.service $(DESTDIR)$(installed_testdir)/services/
 	ln -sf $(dbus_servicedir)/org.freedesktop.impl.portal.PermissionStore.service $(DESTDIR)$(installed_testdir)/services/
+	mkdir -p $(DESTDIR)/$(installed_test_native_messaging_hostsdir)
+	$(INSTALL) -m 644 tests/native-messaging-hosts/installed-org.example.testing.json $(DESTDIR)/$(installed_test_native_messaging_hostsdir)/org.example.testing.json
+	$(INSTALL) -m 755 $(top_srcdir)/tests/native-messaging-hosts/server.sh $(DESTDIR)/$(installed_test_native_messaging_hostsdir)/server.sh
 endif
 
 installed_test_dbsdir = $(installed_testdir)/dbs
